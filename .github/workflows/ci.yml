@@ -27,4 +27,4 @@ jobs:
 
       - name: Run Bruno Collection
         run: |
-          bruno run ./bruno/RealWorldTesting.json
+          bruno run ./bruno/RealWorldTesting.json --env-var base_url="https://localhost:8080/api"
