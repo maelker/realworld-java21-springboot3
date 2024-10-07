@@ -1,0 +1,865 @@
+{
+  "name": "RealWorldTesting",
+  "version": "1",
+  "items": [
+    {
+      "type": "folder",
+      "name": "3- Update user 1",
+      "items": [
+        {
+          "type": "http",
+          "name": "Update mail",
+          "seq": 1,
+          "request": {
+            "url": "{{apiUrl}}/user",
+            "method": "PUT",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\r\n  \"user\": {\r\n    \"email\": \"{{newEmail}}\"\r\n  }\r\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "req": "var randomUsername = Math.random().toString(36).substring(7) + Date.now();\r\nvar randomEmail = randomUsername.substring(7) + \"@mail.com\";\r\nbru.setEnvVar(\"newEmail\", randomEmail);",
+              "res": "bru.setEnvVar(\"user1Email\", res.getBody().user.email);"
+            },
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Update user 1",
+          "seq": 2,
+          "request": {
+            "url": "{{apiUrl}}/user",
+            "method": "PUT",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"user\": {\n    \"email\": \"{{user1Email}}\",\n        \"bio\": \"{{newBio}}\",\n        \"image\": \"{{newImage}}\"\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "req": "var newBio = \"I like to skateboard\";\r\nbru.setEnvVar(\"newBio\", newBio);\r\nvar newImage = \"https://i.stack.imgur.com/xHWG8.jpg\";\r\nbru.setEnvVar(\"newImage\", newImage);"
+            },
+            "vars": {},
+            "assertions": [
+              {
+                "name": "res.body.user.image",
+                "value": "isDefined",
+                "enabled": true,
+                "uid": "U0WdHGMup8J6QCAmO3Zy4"
+              }
+            ],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "1- Ping API",
+      "items": [
+        {
+          "type": "http",
+          "name": "Ping",
+          "seq": 1,
+          "request": {
+            "url": "{{apiUrl}}/articles",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [
+              {
+                "name": "res.status",
+                "value": "eq 200",
+                "enabled": true,
+                "uid": "45oAbICG6PbNbNVmTrDiG"
+              }
+            ],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "tags",
+          "seq": 2,
+          "request": {
+            "url": "{{apiUrl}}/tags",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "4- User 1 actions",
+      "items": [
+        {
+          "type": "http",
+          "name": "Create article 1",
+          "seq": 3,
+          "request": {
+            "url": "{{apiUrl}}/articles",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"article\": {\n    \"title\": \"{{newArticleName}}\",\n    \"description\": \"Ever wonder how?\",\n    \"body\": \"You have to believe\",\n    \"tagList\": [\"reactjs\", \"angularjs\", \"dragons\"]\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "req": "var randomName = \"How to train your dragon\" + Date.now();\n\nbru.setEnvVar(\"newArticleName\", randomName);"
+            },
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Create article 2",
+          "seq": 4,
+          "request": {
+            "url": "{{apiUrl}}/articles",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"article\": {\n    \"title\": \"{{newArticleName}}\",\n    \"description\": \"Ever wonder why?\",\n    \"body\": \"You have to believe to live it\",\n    \"tagList\": [\"reactjs\", \"angularjs\", \"donkeys\"]\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "req": "var randomName = \"How to train your donkey\" + Date.now();\n\nbru.setEnvVar(\"newArticleName\", randomName);"
+            },
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get profile 1",
+          "seq": 1,
+          "request": {
+            "url": "{{apiUrl}}/profiles/{{user1Username}}",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get profile 2",
+          "seq": 2,
+          "request": {
+            "url": "{{apiUrl}}/profiles/{{user2Username}}",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "2- User 1",
+      "items": [
+        {
+          "type": "http",
+          "name": "Authenticated",
+          "seq": 3,
+          "request": {
+            "url": "{{apiUrl}}/user",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});\r\ntest(\"Response contains 'user' field\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData).to.have.property('user');\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Authentication",
+          "seq": 2,
+          "request": {
+            "url": "{{apiUrl}}/users/login",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\r\n  \"user\":{\r\n    \"email\": \"{{user1Email}}\",\r\n    \"password\": \"{{user1Password}}\"\r\n  }\r\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "res": "bru.setEnvVar(\"authToken\", res.getBody().user.token);"
+            },
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 201\", function () {\n    expect(res.getStatus()).to.equal(201);\n});\ntest(\"Response contains 'user' field\", function () {\n    var jsonData = res.getBody();\n    expect(jsonData).to.have.property('user');\n});\n",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Registration",
+          "seq": 1,
+          "request": {
+            "url": "{{apiUrl}}/users",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\r\n  \"user\":{\r\n    \"username\": \"{{user1Username}}\",\r\n    \"email\": \"{{user1Email}}\",\r\n    \"password\": \"{{user1Password}}\"\r\n  }\r\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "req": "var randomUsername = Math.random().toString(36).substring(7) + Date.now();\r\nvar randomEmail = randomUsername.substring(7) + \"@mail.com\";\r\nvar randomPassword = Math.random().toString(36).substring(7);\r\n\r\nbru.setEnvVar(\"user1Username\", randomUsername);\r\nbru.setEnvVar(\"user1Email\", randomEmail);\r\nbru.setEnvVar(\"user1Password\", randomPassword);"
+            },
+            "vars": {},
+            "assertions": [
+              {
+                "name": "res.body.user.image",
+                "value": "isNull",
+                "enabled": true,
+                "uid": "PC4tZg4GJtk8Jr4kVV6Tc"
+              }
+            ],
+            "tests": "test(\"Status code is 201\", function () {\r\n    expect(res.getStatus()).to.equal(201);\r\n});\r\n\r\ntest(\"Response contains 'user' field\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData).to.have.property('user');\r\n});\r\n\r\ntest(\"Image field is null\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData.user.image).to.be.null;\r\n});\r\n\r\ntest(\"Username is correctly set\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData.user.username).to.eql(bru.getEnvVar(\"user1Username\"));\r\n});\r\n\r\ntest(\"Email is correctly set\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData.user.email).to.eql(bru.getEnvVar(\"user1Email\"));\r\n});\r\n",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "5- User 2",
+      "items": [
+        {
+          "type": "http",
+          "name": "Authenticated 2",
+          "seq": 3,
+          "request": {
+            "url": "{{apiUrl}}/user",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});\r\ntest(\"Response contains 'user' field\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData).to.have.property('user');\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Authentication 2",
+          "seq": 2,
+          "request": {
+            "url": "{{apiUrl}}/users/login",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"user\":{\n    \"email\": \"{{user2Email}}\",\n    \"password\": \"{{user2Password}}\"\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "res": "bru.setEnvVar(\"authToken\", res.getBody().user.token);"
+            },
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 201\", function () {\n    expect(res.getStatus()).to.equal(201);\n});\ntest(\"Response contains 'user' field\", function () {\n    var jsonData = res.getBody();\n    expect(jsonData).to.have.property('user');\n});\n",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Registration 2",
+          "seq": 1,
+          "request": {
+            "url": "{{apiUrl}}/users",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"user\":{\n    \"username\": \"{{user2Username}}\",\n    \"email\": \"{{user2Email}}\",\n    \"password\": \"{{user2Password}}\"\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "req": "var randomUsername = Math.random().toString(36).substring(7) + Date.now();\r\nvar randomEmail = randomUsername.substring(7) + \"@mail.com\";\r\nvar randomPwd = Math.random().toString(36).substring(7) + Date.now();\r\n\r\nbru.setEnvVar(\"user2Username\", randomUsername);\r\nbru.setEnvVar(\"user2Email\", randomEmail);\r\nbru.setEnvVar(\"user2Password\", randomPwd);"
+            },
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"Status code is 201\", function () {\r\n    expect(res.getStatus()).to.equal(201);\r\n});\r\n\r\ntest(\"Response contains 'user' field\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData).to.have.property('user');\r\n});\r\n\r\ntest(\"Image field is null\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData.user.image).to.be.null;\r\n});\r\n\r\ntest(\"Username is correctly set\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData.user.username).to.eql(bru.getEnvVar(\"user2Username\"));\r\n});\r\n\r\ntest(\"Email is correctly set\", function () {\r\n    var jsonData = res.getBody();\r\n    expect(jsonData.user.email).to.eql(bru.getEnvVar(\"user2Email\"));\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Update user 2",
+          "seq": 4,
+          "request": {
+            "url": "{{apiUrl}}/user",
+            "method": "PUT",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              },
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"user\": {\n    \"email\": \"{{user2Email}}\",\n        \"bio\": \"{{newBio}}\",\n        \"image\": \"{{newImage}}\"\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "req": "var newBio = \"I like to move it, move it\";\nbru.setEnvVar(\"newBio\", newBio);\nvar newImage = \"https://i.stack.imgur.com/xHWG8.jpg\";\nbru.setEnvVar(\"newImage\", newImage);"
+            },
+            "vars": {},
+            "assertions": [
+              {
+                "name": "res.body.user.image",
+                "value": "isDefined",
+                "enabled": true,
+                "uid": "jsA00iPq9fgQxkj7MmpH6"
+              }
+            ],
+            "tests": "test(\"Status code is 200\", function () {\r\n    expect(res.getStatus()).to.equal(200);\r\n});",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "6- User 2 actions",
+      "items": [
+        {
+          "type": "http",
+          "name": "Comment article",
+          "seq": 3,
+          "request": {
+            "url": "{{apiUrl}}/articles/{{slugArticle}}/comments",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"comment\": {\n    \"body\": \"His name was my name too.\"\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [
+              {
+                "name": "res.status",
+                "value": "eq 200",
+                "enabled": true,
+                "uid": "z20Hup5OyXolItAsuWSAV"
+              }
+            ],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Favorite article",
+          "seq": 5,
+          "request": {
+            "url": "{{apiUrl}}/articles/{{slugArticle}}/favorite",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"comment\": {\n    \"body\": \"His name was my name too.\"\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [
+              {
+                "name": "res.status",
+                "value": "eq 200",
+                "enabled": true,
+                "uid": "wPoD3JL2xNdeFagWH5gLh"
+              }
+            ],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Follow user 1",
+          "seq": 1,
+          "request": {
+            "url": "{{apiUrl}}/profiles/{{user1Username}}/follow",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [
+              {
+                "name": "res.status",
+                "value": "eq 200",
+                "enabled": true,
+                "uid": "3Jpdoyn6Ka12137XT6YiI"
+              }
+            ],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get comments on article",
+          "seq": 4,
+          "request": {
+            "url": "{{apiUrl}}/articles/{{slugArticle}}/comments",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "json": "{\n  \"comment\": {\n    \"body\": \"His name was my name too.\"\n  }\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [
+              {
+                "name": "res.status",
+                "value": "eq 200",
+                "enabled": true,
+                "uid": "LtrXvbWcTQLvRRu9n910L"
+              }
+            ],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get feed",
+          "seq": 2,
+          "request": {
+            "url": "{{apiUrl}}/articles/feed",
+            "method": "GET",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": "Token {{authToken}}",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {
+              "res": "bru.setEnvVar(\"slugArticle\", res.getBody().articles[0].slug)"
+            },
+            "vars": {},
+            "assertions": [
+              {
+                "name": "res.status",
+                "value": "eq 200",
+                "enabled": true,
+                "uid": "AZ8rxYtt5D8Jly9vGbhjb"
+              }
+            ],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "activeEnvironmentUid": "jfWfNYGfOUq9gjQZkFZFH",
+  "environments": [
+    {
+      "variables": [
+        {
+          "name": "apiUrl",
+          "value": "http://localhost:8080/api",
+          "enabled": true,
+          "secret": false,
+          "type": "text"
+        },
+        {
+          "name": "user1Username",
+          "value": "yla7z1728309942199",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "user1Email",
+          "value": "728309942655@mail.com",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "user1Password",
+          "value": "xzh9bv",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "authToken",
+          "value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL3JlYWx3b3JsZC5pbyIsInN1YiI6IjMxMDQ5YzY0LWE2ODUtNDQ1NC1iOWM1LTRiZmIyZDI2MjMxNyIsImV4cCI6MTcyODMxMDI0MywiaWF0IjoxNzI4MzA5OTQzfQ.cMH9_T19o_C0AJHhGRiYWjOvQMxhLyiInBQLn2AQJO6D9Agb5vUz4mM1p2mxsDUdkD-11iQyVWaNHS6HHM4auZK__XuMPgcrH-CIKh0Ia0PLZeTeCXD3JUeaKmZoBfkMmrfEqknIgM-pcyzS7yls1c5mYsRg_3OX6VB8LzS9nui9-LKvtQIkZ2bQUyXseJZYtI58BN6jG-TR_e32Oph6oeJKYnF85BsIbmMJJrUc1-eOoFxlV9k79j-rkP5hQ-ZHyQrmFORRkHUioM0f-vpdBr0sqSIYQPiNNN9Y44QI2vQwLYgIPM5QcdPVB46Qd58RLhKZX5IAVJb3BpFqlE_aqQ",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "newEmail",
+          "value": "728309942655@mail.com",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "newBio",
+          "value": "I like to move it, move it",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "newImage",
+          "value": "https://i.stack.imgur.com/xHWG8.jpg",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "newArticleName",
+          "value": "How to train your donkey1728309942805",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "user2Username",
+          "value": "p9twnv1728309942838",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "user2Email",
+          "value": "728309942838@mail.com",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "user2Password",
+          "value": "s2na541728309942838",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        },
+        {
+          "name": "slugArticle",
+          "value": "how-to-train-your-donkey1728309942805",
+          "secret": false,
+          "enabled": true,
+          "type": "text"
+        }
+      ],
+      "name": "local"
+    }
+  ],
+  "brunoConfig": {
+    "version": "1",
+    "name": "RealWorldTesting",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ]
+  }
+}
