@@ -46,10 +46,10 @@ jobs:
 
       - name: Import GPG Key
         env:
-          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
-          echo "$GPG_SIGNING_KEY" | gpg --import --batch --passphrase "$GPG_PASSPHRASE"
+          echo "$GPG_PRIVATE_KEY" | gpg --import --batch --passphrase "$GPG_PASSPHRASE"
 
       - name: Sign JAR
         run: |
