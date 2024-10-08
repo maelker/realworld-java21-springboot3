@@ -38,7 +38,8 @@ jobs:
 
       - name: Run Bruno tests
         run: |
-          bru run bruno --env local --reporter-junit junit --output results.xml
+          cd bruno
+          bru run --env local --reporter-junit junit --output results.xml
 
       - name: Publish test results
         uses: actions/upload-artifact@v3
