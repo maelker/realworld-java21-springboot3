@@ -53,7 +53,7 @@ jobs:
 
       - name: Sign the JAR file
         run: |
-          gpg --batch --yes --passphrase "$GPG_PASSPHRASE" --detach-sign --armor bootstrap/build/libs/bootstrap.jar
+          gpg --batch --yes --passphrase "$GPG_PASSPHRASE" --pinentry-mode loopback --detach-sign --armor bootstrap/build/libs/bootstrap.jar
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
