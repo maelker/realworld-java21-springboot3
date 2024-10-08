@@ -24,7 +24,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: Run Spring Boot application
-        run: nohup java -jar build/libs/your-app.jar &
+        run: nohup java -jar build/libs/realworld-plain.jar &
 
       - name: Install Bruno CLI
         run: |
@@ -34,7 +34,6 @@ jobs:
         run: |
           bruno run bruno/collection.json --env apiUrl=localhost:8080/api --reporters junit --output-report results.xml
 
-      # Step 7: Upload test results as an artifact (JUnit report format)
       - name: Publish test results
         uses: actions/upload-artifact@v3
         with:
