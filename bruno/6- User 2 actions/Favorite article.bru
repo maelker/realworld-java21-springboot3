@@ -1,0 +1,27 @@
+meta {
+  name: Favorite article
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{apiUrl}}/articles/{{slugArticle}}/favorite
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Token {{authToken}}
+}
+
+body:json {
+  {
+    "comment": {
+      "body": "His name was my name too."
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+}

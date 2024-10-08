@@ -1,0 +1,39 @@
+meta {
+  name: Create article 1
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{apiUrl}}/articles
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Token {{authToken}}
+}
+
+body:json {
+  {
+    "article": {
+      "title": "{{newArticleName}}",
+      "description": "Ever wonder how?",
+      "body": "You have to believe",
+      "tagList": ["reactjs", "angularjs", "dragons"]
+    }
+  }
+}
+
+script:pre-request {
+  var randomName = "How to train your dragon" + Date.now();
+  
+  bru.setEnvVar("newArticleName", randomName);
+}
+
+tests {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}

@@ -1,0 +1,26 @@
+meta {
+  name: Authenticated
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{apiUrl}}/user
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Token {{authToken}}
+}
+
+tests {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+  test("Response contains 'user' field", function () {
+      var jsonData = res.getBody();
+      expect(jsonData).to.have.property('user');
+  });
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Get feed
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{apiUrl}}/articles/feed
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Token {{authToken}}
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:post-response {
+  bru.setEnvVar("slugArticle", res.getBody().articles[0].slug)
+}

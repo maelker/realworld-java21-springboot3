@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="1- Ping API\Ping" errors="0" failures="0" skipped="0" tests="2" timestamp="2024-10-08T08:16:21.941" hostname="Le-PC-de-Mael" time="0.684">
+    <testcase name="res.status eq 200" status="pass" classname="http://localhost:8080/api/articles" time="0.342"/>
+    <testcase name="Status code is 200" status="pass" classname="http://localhost:8080/api/articles" time="0.342"/>
+  </testsuite>
+  <testsuite name="1- Ping API\tags" errors="0" failures="0" skipped="0" tests="0" timestamp="2024-10-08T08:16:21.950" hostname="Le-PC-de-Mael" time="0.014"/>
+  <testsuite name="2- User 1\Registration" errors="0" failures="0" skipped="0" tests="6" timestamp="2024-10-08T08:16:21.950" hostname="Le-PC-de-Mael" time="0.660">
+    <testcase name="res.body.user.image isNull" status="pass" classname="http://localhost:8080/api/users" time="0.110"/>
+    <testcase name="Status code is 201" status="pass" classname="http://localhost:8080/api/users" time="0.110"/>
+    <testcase name="Response contains 'user' field" status="pass" classname="http://localhost:8080/api/users" time="0.110"/>
+    <testcase name="Image field is null" status="pass" classname="http://localhost:8080/api/users" time="0.110"/>
+    <testcase name="Username is correctly set" status="pass" classname="http://localhost:8080/api/users" time="0.110"/>
+    <testcase name="Email is correctly set" status="pass" classname="http://localhost:8080/api/users" time="0.110"/>
+  </testsuite>
+  <testsuite name="2- User 1\Authentication" errors="0" failures="0" skipped="0" tests="2" timestamp="2024-10-08T08:16:21.950" hostname="Le-PC-de-Mael" time="0.139">
+    <testcase name="Status code is 201" status="pass" classname="http://localhost:8080/api/users/login" time="0.070"/>
+    <testcase name="Response contains 'user' field" status="pass" classname="http://localhost:8080/api/users/login" time="0.070"/>
+  </testsuite>
+  <testsuite name="2- User 1\Authenticated" errors="0" failures="0" skipped="0" tests="2" timestamp="2024-10-08T08:16:21.951" hostname="Le-PC-de-Mael" time="0.046">
+    <testcase name="Status code is 200" status="pass" classname="http://localhost:8080/api/user" time="0.023"/>
+    <testcase name="Response contains 'user' field" status="pass" classname="http://localhost:8080/api/user" time="0.023"/>
+  </testsuite>
+  <testsuite name="3- Update user 1\Update mail" errors="0" failures="0" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.951" hostname="Le-PC-de-Mael" time="0.057">
+    <testcase name="Status code is 200" status="pass" classname="http://localhost:8080/api/user" time="0.057"/>
+  </testsuite>
+  <testsuite name="3- Update user 1\Update user 1" errors="0" failures="0" skipped="0" tests="2" timestamp="2024-10-08T08:16:21.951" hostname="Le-PC-de-Mael" time="0.029">
+    <testcase name="res.body.user.image isDefined" status="pass" classname="http://localhost:8080/api/user" time="0.015"/>
+    <testcase name="Status code is 200" status="pass" classname="http://localhost:8080/api/user" time="0.015"/>
+  </testsuite>
+  <testsuite name="4- User 1 actions\Get profile 1" errors="0" failures="0" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.951" hostname="Le-PC-de-Mael" time="0.057">
+    <testcase name="Status code is 200" status="pass" classname="http://localhost:8080/api/profiles/grlbxm1728375380002" time="0.057"/>
+  </testsuite>
+  <testsuite name="4- User 1 actions\Get profile 2" errors="0" failures="1" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.951" hostname="Le-PC-de-Mael" time="0.069">
+    <testcase name="Status code is 200" status="fail" classname="http://localhost:8080/api/profiles/{{user2Username}}" time="0.069">
+      <failure type="failure" message="expected 404 to equal 200"/>
+    </testcase>
+  </testsuite>
+  <testsuite name="4- User 1 actions\Create article 1" errors="0" failures="0" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.951" hostname="Le-PC-de-Mael" time="0.124">
+    <testcase name="Status code is 200" status="pass" classname="http://localhost:8080/api/articles" time="0.124"/>
+  </testsuite>
+  <testsuite name="4- User 1 actions\Create article 2" errors="0" failures="0" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.951" hostname="Le-PC-de-Mael" time="0.055">
+    <testcase name="Status code is 200" status="pass" classname="http://localhost:8080/api/articles" time="0.055"/>
+  </testsuite>
+  <testsuite name="5- User 2\Registration 2" errors="0" failures="0" skipped="0" tests="5" timestamp="2024-10-08T08:16:21.951" hostname="Le-PC-de-Mael" time="0.290">
+    <testcase name="Status code is 201" status="pass" classname="http://localhost:8080/api/users" time="0.058"/>
+    <testcase name="Response contains 'user' field" status="pass" classname="http://localhost:8080/api/users" time="0.058"/>
+    <testcase name="Image field is null" status="pass" classname="http://localhost:8080/api/users" time="0.058"/>
+    <testcase name="Username is correctly set" status="pass" classname="http://localhost:8080/api/users" time="0.058"/>
+    <testcase name="Email is correctly set" status="pass" classname="http://localhost:8080/api/users" time="0.058"/>
+  </testsuite>
+  <testsuite name="5- User 2\Authentication 2" errors="0" failures="0" skipped="0" tests="2" timestamp="2024-10-08T08:16:21.952" hostname="Le-PC-de-Mael" time="0.145">
+    <testcase name="Status code is 201" status="pass" classname="http://localhost:8080/api/users/login" time="0.072"/>
+    <testcase name="Response contains 'user' field" status="pass" classname="http://localhost:8080/api/users/login" time="0.072"/>
+  </testsuite>
+  <testsuite name="5- User 2\Authenticated 2" errors="0" failures="0" skipped="0" tests="2" timestamp="2024-10-08T08:16:21.952" hostname="Le-PC-de-Mael" time="0.015">
+    <testcase name="Status code is 200" status="pass" classname="http://localhost:8080/api/user" time="0.007"/>
+    <testcase name="Response contains 'user' field" status="pass" classname="http://localhost:8080/api/user" time="0.007"/>
+  </testsuite>
+  <testsuite name="5- User 2\Update user 2" errors="0" failures="0" skipped="0" tests="2" timestamp="2024-10-08T08:16:21.952" hostname="Le-PC-de-Mael" time="0.035">
+    <testcase name="res.body.user.image isDefined" status="pass" classname="http://localhost:8080/api/user" time="0.017"/>
+    <testcase name="Status code is 200" status="pass" classname="http://localhost:8080/api/user" time="0.017"/>
+  </testsuite>
+  <testsuite name="6- User 2 actions\Follow user 1" errors="0" failures="0" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.952" hostname="Le-PC-de-Mael" time="0.022">
+    <testcase name="res.status eq 200" status="pass" classname="http://localhost:8080/api/profiles/grlbxm1728375380002/follow" time="0.022"/>
+  </testsuite>
+  <testsuite name="6- User 2 actions\Get feed" errors="0" failures="0" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.952" hostname="Le-PC-de-Mael" time="0.087">
+    <testcase name="res.status eq 200" status="pass" classname="http://localhost:8080/api/articles/feed" time="0.087"/>
+  </testsuite>
+  <testsuite name="6- User 2 actions\Comment article" errors="0" failures="0" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.952" hostname="Le-PC-de-Mael" time="0.029">
+    <testcase name="res.status eq 200" status="pass" classname="http://localhost:8080/api/articles/how-to-train-your-donkey1728375381176/comments" time="0.029"/>
+  </testsuite>
+  <testsuite name="6- User 2 actions\Get comments on article" errors="0" failures="0" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.952" hostname="Le-PC-de-Mael" time="0.037">
+    <testcase name="res.status eq 200" status="pass" classname="http://localhost:8080/api/articles/how-to-train-your-donkey1728375381176/comments" time="0.037"/>
+  </testsuite>
+  <testsuite name="6- User 2 actions\Favorite article" errors="0" failures="0" skipped="0" tests="1" timestamp="2024-10-08T08:16:21.952" hostname="Le-PC-de-Mael" time="0.049">
+    <testcase name="res.status eq 200" status="pass" classname="http://localhost:8080/api/articles/how-to-train-your-donkey1728375381176/favorite" time="0.049"/>
+  </testsuite>
+</testsuites>

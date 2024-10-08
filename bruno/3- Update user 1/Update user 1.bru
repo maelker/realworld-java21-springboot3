@@ -1,0 +1,43 @@
+meta {
+  name: Update user 1
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{apiUrl}}/user
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Token {{authToken}}
+}
+
+body:json {
+  {
+    "user": {
+      "email": "{{user1Email}}",
+          "bio": "{{newBio}}",
+          "image": "{{newImage}}"
+    }
+  }
+}
+
+assert {
+  res.body.user.image: isDefined
+}
+
+script:pre-request {
+  var newBio = "I like to skateboard";
+  bru.setEnvVar("newBio", newBio);
+  var newImage = "https://i.stack.imgur.com/xHWG8.jpg";
+  bru.setEnvVar("newImage", newImage);
+}
+
+tests {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}

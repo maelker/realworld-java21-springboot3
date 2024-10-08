@@ -1,0 +1,39 @@
+meta {
+  name: Authentication
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{apiUrl}}/users/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "user":{
+      "email": "{{user1Email}}",
+      "password": "{{user1Password}}"
+    }
+  }
+}
+
+script:post-response {
+  bru.setEnvVar("authToken", res.getBody().user.token);
+}
+
+tests {
+  test("Status code is 201", function () {
+      expect(res.getStatus()).to.equal(201);
+  });
+  test("Response contains 'user' field", function () {
+      var jsonData = res.getBody();
+      expect(jsonData).to.have.property('user');
+  });
+  
+}

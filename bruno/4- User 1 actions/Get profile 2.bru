@@ -1,0 +1,22 @@
+meta {
+  name: Get profile 2
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{apiUrl}}/profiles/{{user2Username}}
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Token {{authToken}}
+}
+
+tests {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}

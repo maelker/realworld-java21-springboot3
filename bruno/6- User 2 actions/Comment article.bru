@@ -1,0 +1,27 @@
+meta {
+  name: Comment article
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{apiUrl}}/articles/{{slugArticle}}/comments
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Token {{authToken}}
+}
+
+body:json {
+  {
+    "comment": {
+      "body": "His name was my name too."
+    }
+  }
+}
+
+assert {
+  res.status: eq 200
+}

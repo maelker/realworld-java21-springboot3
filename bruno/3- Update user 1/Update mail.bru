@@ -1,0 +1,40 @@
+meta {
+  name: Update mail
+  type: http
+  seq: 1
+}
+
+put {
+  url: {{apiUrl}}/user
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Token {{authToken}}
+}
+
+body:json {
+  {
+    "user": {
+      "email": "{{newEmail}}"
+    }
+  }
+}
+
+script:pre-request {
+  var randomUsername = Math.random().toString(36).substring(7) + Date.now();
+  var randomEmail = randomUsername.substring(7) + "@mail.com";
+  bru.setEnvVar("newEmail", randomEmail);
+}
+
+script:post-response {
+  bru.setEnvVar("user1Email", res.getBody().user.email);
+}
+
+tests {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}

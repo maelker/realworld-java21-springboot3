@@ -1,0 +1,61 @@
+meta {
+  name: Registration 2
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{apiUrl}}/users
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "user":{
+      "username": "{{user2Username}}",
+      "email": "{{user2Email}}",
+      "password": "{{user2Password}}"
+    }
+  }
+}
+
+script:pre-request {
+  var randomUsername = Math.random().toString(36).substring(7) + Date.now();
+  var randomEmail = randomUsername.substring(7) + "@mail.com";
+  var randomPwd = Math.random().toString(36).substring(7) + Date.now();
+  
+  bru.setEnvVar("user2Username", randomUsername);
+  bru.setEnvVar("user2Email", randomEmail);
+  bru.setEnvVar("user2Password", randomPwd);
+}
+
+tests {
+  test("Status code is 201", function () {
+      expect(res.getStatus()).to.equal(201);
+  });
+  
+  test("Response contains 'user' field", function () {
+      var jsonData = res.getBody();
+      expect(jsonData).to.have.property('user');
+  });
+  
+  test("Image field is null", function () {
+      var jsonData = res.getBody();
+      expect(jsonData.user.image).to.be.null;
+  });
+  
+  test("Username is correctly set", function () {
+      var jsonData = res.getBody();
+      expect(jsonData.user.username).to.eql(bru.getEnvVar("user2Username"));
+  });
+  
+  test("Email is correctly set", function () {
+      var jsonData = res.getBody();
+      expect(jsonData.user.email).to.eql(bru.getEnvVar("user2Email"));
+  });
+}
