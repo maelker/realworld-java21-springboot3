@@ -34,6 +34,7 @@ jobs:
         run: |
           ls
           cd bruno/
+          ls
           bru run --env local --reporter-junit junit --output results.xml
 
       - name: Publish test results
