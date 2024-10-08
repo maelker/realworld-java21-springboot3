@@ -36,7 +36,7 @@ jobs:
 
       # Step 7: Upload test results as an artifact (JUnit report format)
       - name: Publish test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: bruno-test-report
           path: bruno/results.xml
