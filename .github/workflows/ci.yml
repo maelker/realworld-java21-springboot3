@@ -27,7 +27,7 @@ jobs:
         run: sleep 20  # Adjust the sleep duration if needed
 
       - name: Run Spring Boot application
-        run: nohup java -jar bootstrap/build/libs/bootstrap.jar
+        run: nohup java -jar bootstrap/build/libs/bootstrap.jar &
 
       - name: Install Bruno CLI
         run: |
