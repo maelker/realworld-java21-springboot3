@@ -59,4 +59,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: bootstrap
-          path: bootstrap/build/libs/*.jar
+          path: bootstrap/build/libs/*.jar 
