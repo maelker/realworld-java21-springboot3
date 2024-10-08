@@ -51,12 +51,14 @@ jobs:
         run: |
           echo "$GPG_PRIVATE_KEY" | gpg --import --batch --passphrase "$GPG_PASSPHRASE"
 
-      - name: Sign JAR
+      - name: Sign the JAR file
         run: |
-          ./gradlew signArchives
-    
-      - name: Upload JAR
+          gpg --batch --yes --passphrase "$GPG_PASSPHRASE" --detach-sign --armor bootstrap/build/libs/bootstrap.jar
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Upload signature artifact
         uses: actions/upload-artifact@v3
         with:
           name: bootstrap
-          path: bootstrap/build/libs/*.jar
+          path: bootstrap/build/libs/bootstrap.jar.asc
