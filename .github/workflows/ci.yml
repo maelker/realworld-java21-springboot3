@@ -40,3 +40,23 @@ jobs:
         with:
           name: bruno-test-report
           path: bruno/results.xml
+
+      - name: Install GnuPG
+        run: sudo apt-get install -y gnupg
+
+      - name: Import GPG Key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --import --batch --passphrase "$GPG_PASSPHRASE"
+
+      - name: Sign JAR
+        run: |
+          ./gradlew signArchives
+    
+      - name: Upload JAR
+        uses: actions/upload-artifact@v2
+        with:
+          name: bootstrap
+          path: bootstrap/build/libs/*.jar
