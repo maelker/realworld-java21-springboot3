@@ -30,7 +30,7 @@ jobs:
           name: bootstrap-jar
           path: bootstrap/build/libs/bootstrap.jar
 
-  start:
+  bruno_tests:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -45,13 +45,6 @@ jobs:
       - name: Run Spring Boot application
         run: |
           nohup java -jar bootstrap.jar &
-
-  bruno_tests:
-    runs-on: ubuntu-latest
-    needs: start
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
         
       - name: Install Bruno CLI
         run: |
