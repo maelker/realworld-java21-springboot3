@@ -22,15 +22,9 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
-        
-      - name: Wait for Spring Boot to be ready
-        run: sleep 20
 
       - name: Run Spring Boot application
         run: nohup java -jar bootstrap/build/libs/bootstrap.jar &
-        
-      - name: Wait for Spring Boot to be ready
-        run: sleep 20
 
       - name: Install Bruno CLI
         run: |
@@ -38,6 +32,7 @@ jobs:
 
       - name: Run Bruno tests
         run: |
+          ls
           cd bruno
           bru run --env local --reporter-junit junit --output results.xml
 
