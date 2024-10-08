@@ -33,7 +33,7 @@ jobs:
       - name: Run Bruno tests
         run: |
           ls
-          cd bruno
+          cd bruno/
           bru run --env local --reporter-junit junit --output results.xml
 
       - name: Publish test results
