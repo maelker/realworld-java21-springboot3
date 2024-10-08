@@ -24,10 +24,13 @@ jobs:
         run: ./gradlew clean build
         
       - name: Wait for Spring Boot to be ready
-        run: sleep 20  # Adjust the sleep duration if needed
+        run: sleep 20
 
       - name: Run Spring Boot application
         run: nohup java -jar bootstrap/build/libs/bootstrap.jar &
+        
+      - name: Wait for Spring Boot to be ready
+        run: sleep 20
 
       - name: Install Bruno CLI
         run: |
@@ -35,10 +38,11 @@ jobs:
 
       - name: Run Bruno tests
         run: |
-          bruno run bruno/collection.json --env apiUrl=localhost:8080/api --reporters junit --output-report results.xml
+          cd bruno
+          bru run --env local --reporter-junit junit --output results.xml
 
       - name: Publish test results
         uses: actions/upload-artifact@v3
         with:
           name: bruno-test-report
-          path: bruno/results.xml
+          path: results.xml
